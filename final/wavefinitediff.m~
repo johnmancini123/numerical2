@@ -1,0 +1,78 @@
+function w = wavefinitediff(L, tMax, h, k, alpha, f, t_left_bc, t_right_bc, g)
+    m = L/h;
+    n = int8(tMax/k +1);
+    lambda = alpha*k/h;
+    
+    w = zeros(m, n);
+  
+    w(1,1) = f(0);
+    w(1, 
+    
+    for i =2: m-1
+       w(i, 1) = f(i*h);
+       w(i, 2) = (1-lambda^2)*f((i-1)*h) + .5*lambda^2*(f((i-2)*h) + f(i*h) + k*g((i-1)*h));
+    end
+    
+    
+    for j = 2 : n-1
+        for i = 2 : m-1
+            w(i, j+1) = 2*(1-lambda^2)*w(i, j) + lambda^2*(w(i+1, j)-w(i-1, j)) - w(i, j-1);
+        end
+    end
+    
+    disp(w);
+    return;
+    
+    
+    
+    
+    
+    
+    w0 = zeros(1, length(x));
+    for i = 1:length(x)
+       w0(i) = f(x(i)); %getting our initial approximation vector
+    end
+    
+    lambda = alpha*k/h;
+    %calculating w1 since this is a 2 step method
+    w1 = zeros(length(x), 1);
+    w1(1) = 0;
+    w1(end) = 0;
+    
+    
+    
+    for i = 2: n-1
+       w1(i) = (1-lambda^2)*f((i-1)*h) + .5*lambda^2*(f((i-2)*h) + f((i+1)*h) + k*g((i-1)*h)); %taylor series to approximate w1
+    end
+    
+    %{
+    %constructing A
+    v1 = zeros(1, n) + 2*(1-lambda^2);
+    A = diag(v1);
+    v2 = zeros(1, n-1) + lambda^2;
+    temp = diag(v2, -1);
+    A = A + temp;
+    temp = diag(v2, 1);
+    A = A + temp;
+    
+   
+    
+    w = zeros(1, n);
+    for i = 1:m
+        w = (A*w1) - w0;
+        w0 = w1;
+        w1 = w;
+    end
+    %}
+ 
+    w = zeros(1, n);
+    w(1) = 0;
+    w(end) = 0;
+    for j = 1: m
+        for i = 2: n-1
+            w(i) = 2*(1-lambda^2)*w1(i) + lambda^2*(w1(i+1)-w1(i)) - w0(i);
+        end
+        w0 = w1;
+        w1 = w;
+    end
+end
