@@ -37,14 +37,12 @@ B = B + temp;
 
 
 t = k;
-c = zeros(n-1, 1);
-c(1) = t_left_bc(t);
-c(end) = t_right_bc(t);
-
 
 w_0 = x_low_bc(x); %initial vector of values
 w_0 = transpose(w_0);
 b = B*w_0;
+b(1) = b(1) + t_left_bc(t);
+b(end) = b(end) + t_right_bc(t);
 
 fullu(end, 1:end) = x_low_bc(X);
 w = zeros(n-1, 1); %the vector that holds the solutions
@@ -53,9 +51,9 @@ for j = 1: m
     w = A\b;
     fullu(end-j, 2:end-1) = w;
     t = t+k;
-    c(1) = t_left_bc(t);
-    c(end) = t_right_bc(t);
-    b = B*w + c;
+    b = B*w;
+    b(1) = b(1) + t_left_bc(t);
+    b(end) = b(end) + t_right_bc(t);
 end
 w = transpose(w);
 

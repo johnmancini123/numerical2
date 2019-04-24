@@ -1,5 +1,5 @@
 function out = f(x)
-    if (x >= 0 & x <= .5)
+    if (x <= .5)
         out = 1; 
     else
         out = -1;

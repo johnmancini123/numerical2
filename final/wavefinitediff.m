@@ -23,11 +23,10 @@ function W = wavefinitediff(L, tMax, h, k, alpha, f, t_left_bc, t_right_bc, g, n
     x = 0:h:L;
     y = 0:k:tMax;
     [xx, yy] = meshgrid(y, x);
-    
     surf(xx, yy, w);
     shg;
     xlabel('x')
     ylabel('t')
-    return;
+    return
     
     

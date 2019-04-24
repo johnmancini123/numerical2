@@ -1,18 +1,18 @@
+
+
 %%
-%Number 3 on final exam
-diffusion = 1;
+%number 3 approximations look right graph looks bad
 L = 1;
-h = .05;
-k = .00125;
-tMax = 6;
+m = 20;
+n = 4800;
+T = 6;
 x_low = @(x) (x-x+1);
 
+t_left = @(t) exp(-5*t);
+t_right = @(t) (abs(cos(2*t))*exp(-(1/2)*t));
+alpha = 1;
 
-t_right = @(t) (abs(cos(2*t))*exp(-1/2*t));
-w = cranknicolsonmethod(L,h,tMax,k,t_left,t_right,x_low, 1); %calculating approximation
-w = horzcat(t_left(T), w); %adding boundary conditions to the vector
-w = horzcat(w, t_right(T));
-
+w = cn(L, m, T, n, alpha, t_left, t_right, x_low); %calculating approximation
 x = (0:h:L);
 %displaying results
 
@@ -22,7 +22,6 @@ for i=1:length(x)
 end
 
 fprintf("\n\n");
-
 
 
 
@@ -55,6 +54,7 @@ for i = 1: length(w)
 end
 
 %%
+%textbook problem
 L = 1;
 tMax = .3;
 h = .1;
