@@ -3,17 +3,18 @@
 %%
 %number 3 approximations look right graph looks bad
 L = 1;
-m = 20;
+m = 100;
 n = 4800;
 T = 6;
-x_low = @(x) (x-x+1);
+x_low = @(x) (1);
 
 t_left = @(t) exp(-5*t);
 t_right = @(t) (abs(cos(2*t))*exp(-(1/2)*t));
 alpha = 1;
 
 w = cn(L, m, T, n, alpha, t_left, t_right, x_low); %calculating approximation
-x = (0:h:L);
+h = .01;
+x = 0:h:L;
 %displaying results
 
 fprintf("Crank nicolson method for problem 3 on final exam\n");
@@ -64,7 +65,7 @@ t_left = @(t) (t-t+0);
 t_right = t_left;
 x_low = @(x) (sin(2*pi*x));
 g = @(x) (2*pi*sin(2*pi*x));
-n = int8(tMax/k +1);
+n = int8(tMax/k);
 w = wavefinitediff(L, tMax, h, k, alpha, x_low, t_left, t_right, g, n);
 
 x = 0:h:L;

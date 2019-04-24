@@ -55,8 +55,10 @@ function w = cn(L, m, T, n, alpha, left_bc, right_bc, low_bc)
     
     
     x = 0:h:L;
-    y = 0:k:T;
+    y = T:-k:0;
     [xx, yy] = meshgrid(x, y);
+    
+    disp(fullu(1:end,1));
     mesh(xx, yy, fullu);
     shg;
     xlabel('x');
