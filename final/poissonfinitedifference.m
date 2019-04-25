@@ -1,7 +1,6 @@
 function w = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MAX, TOL)
     h = (b-a)/n;%step 1
     k = (d-c)/m;
-    
     x = (a+h):h:(b-h); %step 2
     y = (c+k):k:(d-k);%step 3
     
@@ -11,21 +10,21 @@ function w = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MA
     mew = 2*(1+lambda);
     l = 1;
     
-    NORM  = -1;
+   
     while l <= MAX%step 6
         
         %step 7
-        z = (-h^2*f(x(1), y(end)) + gyl(y(end)) + lambda*(gxr(d)) + lambda*w(1, end-1) + w(2, end))/mew;
+        z = (-h^2*f(x(1), y(end)) + gyl(y(end)) + lambda*(gxr(x(1))) + lambda*w(1, end-1) + w(2, end))/mew;
         NORM = abs(z - w(1, end));
         w(1, end) = z;
         
         %step 8
         for i = 2: n-2
-            z = (-h^2*f(x(i), y(end)) + lambda*(gxr(d)) + lambda*w(i-1, end) + w(i+1, end) + lambda*w(i, end-1))/mew;
+            z = (-h^2*f(x(i), y(end)) + lambda*(gxr(x(i))) + w(i-1, end) + w(i+1, end) + lambda*w(i, end-1))/mew;
             if abs(w(end, end) - z) > NORM
-                NORM = abs(w(end, end) - z);
+                NORM = abs(w(i, end) - z);
             end
-            w(end, end) = z;
+            w(i, end) = z;
         end
         
         %step 9
@@ -39,7 +38,7 @@ function w = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MA
         for j = m-2:-1:2
             
             %step 11
-            z = (-h^2*f(x(j), y(j)) + gyl(y(j)) + lambda*w(1, j+1) + w(2, j) + lambda*w(i, j-1))/mew;
+            z = (-h^2*f(x(1), y(j)) + gyl(y(j)) + lambda*w(1, j+1) + w(2, j) + lambda*w(i, j-1))/mew;
             if abs(w(1, j) - z) > NORM
                 NORM = abs(w(1, j) - z);
             end
@@ -55,7 +54,7 @@ function w = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MA
             end
             
             %step 13
-            z = (-h^2*f(x(end), y(j)) + gyr(y(j)) + w(end-1, j) + lambda*w(end, j+1) + lambda*w(end, j))/mew;
+            z = (-h^2*f(x(end), y(j)) + gyr(y(j)) + w(end-1, j) + lambda*w(end, j+1) + lambda*w(end, j-1))/mew;
             if abs(w(end, j) - z) > NORM
                 NORM = abs(w(end, j) - z);
             end
@@ -63,7 +62,7 @@ function w = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MA
         end
         
         %step 14
-        z = (-h^2*f(x(1), y(1)) + gyl(y(1)) + lambda*gxr(x(1)) + lambda*w(1, 2) + w(2, j))/mew;
+        z = (-h^2*f(x(1), y(1)) + gyl(y(1)) + lambda*gxr(x(1)) + lambda*w(1, 2) + w(2, 1))/mew;
             if abs(w(1, 1) - z) > NORM
                 NORM = abs(w(1, 1) - z);
             end
@@ -94,6 +93,9 @@ function w = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MA
         l = l+1;
     end
     
-    fprintf("MAX ITER REACHED\n");
+    if (l>=MAX)
+        fprintf("MAX ITER REACHED\n");
+    end
+    
     
 end
