@@ -98,9 +98,8 @@ fprintf("Number 4\n");
 a = -1;
 b = 1;
 h = .1;
-n=11;
 func = @(x,y) (-exp(2.5*(x^2 + y^2)));
-w = poissonninepoint(a, b, h, 11, func)
+w = poissonninepoint(a, b, h, func);
 
 %%
 %Number 5 
