@@ -47,7 +47,6 @@ w = horzcat(w, v4);
 x = a:h:b;
 y = c:k:d;
 [xx, yy] = meshgrid(x, y);
-disp(xx);
 surf(xx, yy, w);
 xlabel('x');
 ylabel('y');
@@ -93,6 +92,15 @@ end
 fprintf("\n\n");
 
 
+%%
+%Number 4
+fprintf("Number 4\n");
+a = -1;
+b = 1;
+h = .1;
+n=11;
+func = @(x,y) (-exp(2.5*(x^2 + y^2)));
+w = poissonninepoint(a, b, h, 11, func)
 
 %%
 %Number 5 

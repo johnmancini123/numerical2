@@ -13,7 +13,7 @@ function w = cranknicolson(L, m, T, n, alpha, left_bc, right_bc, low_bc)
         w(i) = low_bc((i-1)*h);
     end
 
-    fullu(end, 1:end) = w;
+    fullu(1, 1:end) = w;
 
     l = zeros(1, m-1);
     u = zeros(1, m-1);
@@ -50,7 +50,7 @@ function w = cranknicolson(L, m, T, n, alpha, left_bc, right_bc, low_bc)
            w(i) = z(i-1) - u(i-1)*w(i+1);
        end
  
-       fullu(end-j, 1:end) = w;
+       fullu(j+1, 1:end) = w;
     end
     
     

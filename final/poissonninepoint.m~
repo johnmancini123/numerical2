@@ -16,16 +16,11 @@ function w = poissonninepoint(a, b, h, n, f)
     v1 = zeros(1, n-3) + 2/3;
     temp = diag(v1, 3);
     A = A + temp;
-    temp = diag(v1, -3);
-    A = A + temp;
     
     for i = 1: n-3
-        if mod(i, 3) ~= 0
+        if mod(1) ~= 0
             A(i+1, i+3) = 1/6; 
-            A(i+3, i+1) = 1/6;
         end
     end
-    
-    
     disp(A);
 end
