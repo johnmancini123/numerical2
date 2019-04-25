@@ -1,4 +1,4 @@
-function w = cn(L, m, T, n, alpha, left_bc, right_bc, low_bc)
+function w = cranknicolsonnormal(L, m, T, n, alpha, left_bc, right_bc, low_bc)
     fullu = zeros(n+1, m+1);
 
     h = L/m;%step 1
@@ -6,10 +6,9 @@ function w = cn(L, m, T, n, alpha, left_bc, right_bc, low_bc)
     N = n;
     lambda = alpha^2*k/h^2;
     w = zeros(1, m+1);
-    w(1) = left_bc(0);
-    w(end) = right_bc(0);
+    w(end) = 0;
 
-    for i = 2:m %step 2
+    for i = 2: m%step 2
         w(i) = low_bc((i-1)*h);
     end
 
@@ -32,18 +31,13 @@ function w = cn(L, m, T, n, alpha, left_bc, right_bc, low_bc)
     
     for j = 1:N %step 6
        t = j*k;
-       z(1) = ((1-lambda)*w(2) + lambda/2*w(3) + lambda/2 + lambda/2*left_bc(t))/l(1); %step 7
-       w(1) = left_bc(t);
+       z(1) = ((1-lambda)*w(2) + lambda/2*w(3))/l(1); %step 7
+  
 
-       for i = 2:m-2  %step 8
+       for i = 2:m-1  %step 8
            z(i) = ((1-lambda)*w(i+1) +lambda/2*(w(i+2) + w(i) + z(i-1)))/l(i);
        end
-       
-       z(end) = ((1-lambda)*w(end-1) + lambda/2*(w(end) + w(end-2) + z(end-1) + right_bc(t)))/l(end);
-       w(end) = right_bc(t);
-
-
-
+      
        w(end-1) = z(end); %step 9
 
        for i = m-1:-1:2 %step 10
@@ -55,10 +49,9 @@ function w = cn(L, m, T, n, alpha, left_bc, right_bc, low_bc)
     
     
     x = 0:h:L;
-    y = T:-k:0;
+    y = 0:k:T;
     [xx, yy] = meshgrid(x, y);
     
-    disp(fullu(1:end,1));
     mesh(xx, yy, fullu);
     shg;
     xlabel('x');
