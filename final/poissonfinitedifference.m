@@ -1,4 +1,4 @@
-function a = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MAX, tol)
+function w = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MAX, tol)
     h = (b-a)/n;%step 1
     k = (d-c)/m;
     

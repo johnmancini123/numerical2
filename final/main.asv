@@ -1,7 +1,20 @@
 %%
 %number 1
 fprintf("Number 1\n");
-
+n = 15;
+m = 15;
+a = 0;
+b = 6;
+c = 0;
+d = 5;
+f = @(x, y) (-1.5/1.04);
+gxl = @(x) (x*(6-x));
+gxr = @(x) (0);
+gyl = @(y) (5*(5-y));
+gyr = @(y) (0);
+MAX = 100;
+tol = 10^-3;
+w = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MAX, tol)
 
 %%
 %number 2 
