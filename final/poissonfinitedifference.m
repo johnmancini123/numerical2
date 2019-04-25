@@ -63,7 +63,35 @@ function a = poissonfinitedifference(a, b, c, d, f, gxl, gxr, gyl, gyr, n, m, MA
         end
         
         %step 14
+        z = (-h^2*f(x(1), y(1)) + gyl(y(1)) + lambda*gxr(x(1)) + lambda*w(1, 2) + w(2, j))/mew;
+            if abs(w(1, 1) - z) > NORM:
+                NORM = abs(w(1, 1) - z);
+            end
+        w(1, 1) = z;
         
+        %step 15
+        for i = 2:n-2
+            z = (-h^2*f(x(i), y(1)) + lambda*gxr(x(i)) + w(i-1, 1) + lambda*w(i, 2) + w(i+1, 1))/mew;
+            if abs(w(i, 1) - z) > NORM:
+                NORM = abs(w(i, 1) - z);
+            end
+            w(i, 1) = z;
+        end
+        
+        %step 16
+        z = (-h^2*f(x(end), y(1)) + gyr(y(1)) + lambda*gxr(x(end)) + w(n-2, 1) + lambda*w(n-1, 2))/mew;
+            if abs(w(end, 1) - z) > NORM:
+                NORM = abs(w(end, 1) - z);
+            end
+        w(end, 1) = z;
+        
+        %step 17
+        if NORM <= TOL
+           %step 18 output results 
+           return; 
+        end
+        
+        l = l+1;
     end
     
 end
